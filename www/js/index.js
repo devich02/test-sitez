@@ -1,49 +1,20 @@
 
-function animate()
-{
-	var div = document.getElementById("div1");
-	
-	var r = div.getAttribute("r");
-	if (r == "" || typeof(r) == "undefined" || r == null)
-	{
-		div.setAttribute("r", "1");
-		div.setAttribute("radius", "200");
-		r = 1;
-	}
-	else
-		r = +r;
-		
-	var radius = div.getAttribute("radius");
-	radius = +radius;
-	
-	if (r == 1)
-	{
-		radius-=2;
-		div.style.borderRadius = radius + "px";
-		if (radius == 0)
-		{
-			div.setAttribute("r", 0);
-		}
-		div.setAttribute("radius", radius);
-	}
-	else
-	{
-		radius+=2;
-		div.style.borderRadius = radius + "px";
-		if (radius == 200)
-		{
-			div.setAttribute("r", 1);
-		}
-		div.setAttribute("radius", radius);
-	}
-	
-	setTimeout(animate, 10);
-}
+var score = 0;
 
 function update_enemy(e)
 {
-	--e.x;
+	e.x -= 2;
 	e.o.style.left = e.x + "px";
+	e.wheels.style.left = (e.x - 10) + "px";
+	e.gun.style.left = (e.x - 7) + "px";
+	
+	if (e.x < -30)
+	{
+		document.getElementsByTagName("body")[0].removeChild(e.o);
+		--score;
+		return true;
+	}
+	return false;
 }
 
 function Enemy()
@@ -55,7 +26,17 @@ function Enemy()
 	this.o.className = "enemy";
 	this.o.style.left = this.x + "px";
 	
+	this.wheels = document.createElement("div");
+	this.wheels.className = "enemy-wheels";
+	this.wheels.style.left = (this.x - 10) + "px";
+	
+	this.gun = document.createElement("div");
+	this.gun.className = "enemy-gun";
+	this.gun.style.left = (this.x - 7) + "px";
+	
 	body.appendChild(this.o);
+	body.appendChild(this.wheels);
+	body.appendChild(this.gun);
 }
 
 var enemies = [];
@@ -64,8 +45,14 @@ function update()
 {
 	for (var i = 0; i < enemies.length; ++i)
 	{
-		update_enemy(enemies[i]);
+		if (update_enemy(enemies[i]))
+		{
+			enemies.splice(i, 1);
+			--i;
+		}
 	}
+	
+	document.getElementById("score").innerHTML = "Score " + score;
 	
 	setTimeout(update, 50);
 }
@@ -83,3 +70,9 @@ window.onload =
 		update();
 	};
 
+window.onkeypress = 
+	function(e)
+	{
+		if (e.which == 97)
+			alert('asdf');
+	};
