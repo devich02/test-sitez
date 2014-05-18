@@ -100,8 +100,63 @@ function update_bomb(e)
 	if (e.y > window.innerHeight - 40)
 	{
 		document.getElementsByTagName("body")[0].removeChild(e.o);
+		for( var i = 100; i >0; i--)
+		{
+			setTimeout(create_particle, i * 10);
+		}
 		return true;
 	}
+}
+
+var explosion =[];
+
+function Explosion()
+{
+	this.y = window.innerHeight - 40;
+	
+	this.counter = 0;
+	var body = document.getElementsByTagName("body")[0];
+	this.o = document.createElement("div");
+	this.o.className = "explosion";
+	this.o.style.top = this.y + "px";
+	
+	var r = Math.random();
+	
+	if (r < .33)
+		this.o.style.backgroundColor = "red";
+	else if(r < .66)
+		this.o.style.backgroundColor = "orange";
+	else
+		this.o.style.backgroundColor = "yellow";
+		
+	body.appendChild(this.o);
+	
+}
+
+function update_explosion(e)
+{
+	e.counter++;
+	if (e.counter <7)
+	{
+		e.y-= 2;
+	}
+	else
+	{
+		e.y+= 2;
+	}
+	
+	if(e.counter > 10)
+	{
+		document.getElementsByTagName("body")[0].removeChild(e.o);
+		return true;
+	}
+	e.o.style.top = e.y +"px";
+	e.o.style.left = (35 + (Math.random() - .5)*3) + "%";
+}
+
+function create_particle()
+{
+	explosion[explosion.length] = new Explosion();
 }
 
 var enemies = [];
@@ -146,6 +201,15 @@ function update()
 		}
 	}
 
+	for(var i = 0; i < explosion.length; ++i)
+	{
+		if(update_explosion(explosion[i]))
+		{
+			explosion.splice(i,1);
+			--i;
+		}
+	}
+	
 	document.getElementById("score").innerHTML = "Score " + score;
 	
 	setTimeout(update, 50);

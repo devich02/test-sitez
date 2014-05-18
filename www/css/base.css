@@ -83,6 +83,14 @@ position:absolute;
 	background-color:black;
 }
 
+.explosion
+{
+	position: absolute;
+	width: 2px;
+	height: 2px;
+	bottom:40px;
+	left:35%;
+}
 .enemy
 {
 	position:fixed;
