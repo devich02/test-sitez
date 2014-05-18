@@ -111,6 +111,25 @@ position:absolute;
 	background-color:black;
 }
 
+.tree
+{
+	background-color:brown;
+	bottom:40px;
+	width:6px;
+	height:45px;
+	position:fixed;
+	margin-left:2px;
+}
+.tree-top
+{
+	background-color:green;
+	width:30px;
+	height:30px;
+	border-radius:15px;
+	position:fixed;
+	bottom:80px;
+}
+
 #div1
 {
 	position:absolute;

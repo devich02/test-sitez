@@ -11,6 +11,8 @@ function update_enemy(e)
 	if (e.x < -30)
 	{
 		document.getElementsByTagName("body")[0].removeChild(e.o);
+		document.getElementsByTagName("body")[0].removeChild(e.wheels);
+		document.getElementsByTagName("body")[0].removeChild(e.gun);
 		--score;
 		return true;
 	}
@@ -37,6 +39,39 @@ function Enemy()
 	body.appendChild(this.o);
 	body.appendChild(this.wheels);
 	body.appendChild(this.gun);
+}
+
+function update_tree(e)
+{
+	e.x -= 1;
+	e.o.style.left = e.x + "px";
+	e.top.style.left = (e.x - 10) + "px";
+	
+	if (e.x < -30)
+	{
+		document.getElementsByTagName("body")[0].removeChild(e.o);
+		document.getElementsByTagName("body")[0].removeChild(e.top);
+		--score;
+		return true;
+	}
+	return false;
+}
+
+function Tree()
+{
+	this.x = window.innerWidth + 30;
+	
+	var body = document.getElementsByTagName("body")[0];
+	this.o = document.createElement("div");
+	this.o.className = "tree";
+	this.o.style.left = this.x + "px";
+	
+	this.top = document.createElement("div");
+	this.top.className = "tree-top";
+	this.top.style.left = (this.x - 10) + "px";
+	
+	body.appendChild(this.o);
+	body.appendChild(this.top);
 }
 
 var bombs = [];
@@ -70,6 +105,7 @@ function update_bomb(e)
 }
 
 var enemies = [];
+var trees = [];
 
 function update()
 {
@@ -78,6 +114,15 @@ function update()
 		if (update_enemy(enemies[i]))
 		{
 			enemies.splice(i, 1);
+			--i;
+		}
+	}
+	
+	for (var i = 0; i < trees.length; ++i)
+	{
+		if (update_tree(trees[i]))
+		{
+			trees.splice(i, 1);
 			--i;
 		}
 	}
@@ -102,6 +147,12 @@ function create_enemies()
 	setTimeout(create_enemies, Math.random() * 2000 + 1500);
 }
 
+function create_trees()
+{
+	trees[trees.length] = new Tree();
+	setTimeout(create_trees, Math.random() * 3000 + 2500);
+}
+
 window.onkeypress =
 function(e)
 {
@@ -115,5 +166,13 @@ window.onload =
 	function()
 	{
 		create_enemies();
+		create_trees();
 		update();
 	};
+
+	
+	
+	
+	
+	
+	
