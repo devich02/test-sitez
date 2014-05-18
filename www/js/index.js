@@ -40,29 +40,35 @@ function animate()
 	setTimeout(animate, 10);
 }
 
+function update_enemy(e)
+{
+	--e.x;
+	e.o.style.left = e.x + "px";
+}
+
 function Enemy()
 {
 	this.x = window.innerWidth - 30;
 	
 	var body = document.getElementsByTagName("body")[0];
-	this.e = document.createElement("div");
-	this.e.className = "enemy";
-	this.e.style.left = this.x + "px";
+	this.o = document.createElement("div");
+	this.o.className = "enemy";
+	this.o.style.left = this.x + "px";
 	
-	body.appendChild(this.e);
-	
-	this.update =
-		function()
-		{
-			--this.x;
-			this.e.style.left = this.x + "px";
-			setTimeout(this.update.bind(this), 50 + Math.random() * 30);
-		};
-	setTimeout(this.update.bind(this), 20);
-	
+	body.appendChild(this.o);
 }
 
 var enemies = [];
+
+function update()
+{
+	for (var i = 0; i < enemies.length; ++i)
+	{
+		update_enemy(enemies[i]);
+	}
+	
+	setTimeout(update, 50);
+}
 
 function create_enemies()
 {
@@ -74,5 +80,6 @@ window.onload =
 	function()
 	{
 		create_enemies();
+		update();
 	};
 

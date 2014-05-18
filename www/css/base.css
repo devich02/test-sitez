@@ -33,7 +33,7 @@ position:absolute;
 .enemy
 {
 	position:fixed;
-	bottom:px;
+	bottom:50px;
 	width:15px;
 	height:15px;
 	background-color:black;
