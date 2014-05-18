@@ -30,6 +30,15 @@ position:absolute;
 	background-color:black;
 }
 
+.enemy
+{
+	position:fixed;
+	bottom:px;
+	width:15px;
+	height:15px;
+	background-color:black;
+}
+
 #div1
 {
 	position:absolute;

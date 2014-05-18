@@ -40,20 +40,39 @@ function animate()
 	setTimeout(animate, 10);
 }
 
+function Enemy()
+{
+	this.x = window.innerWidth - 30;
+	
+	var body = document.getElementsByTagName("body")[0];
+	this.e = document.createElement("div");
+	this.e.className = "enemy";
+	this.e.style.left = this.x + "px";
+	
+	body.appendChild(this.e);
+	
+	this.update =
+		function()
+		{
+			--this.x;
+			this.e.style.left = this.x + "px";
+			setTimeout(this.update.bind(this), 50 + Math.random() * 30);
+		};
+	setTimeout(this.update.bind(this), 20);
+	
+}
+
+var enemies = [];
+
+function create_enemies()
+{
+	enemies[enemies.length] = new Enemy();
+	setTimeout(create_enemies, Math.random() * 2000 + 1500);
+}
+
 window.onload = 
 	function()
 	{
-		document.getElementById("div1").onclick = function(){alert("div");};
+		create_enemies();
 	};
-	
-window.onkeypress = 
-	function()
-	{
-		div.setAttribute("position",position++);
-	}
-
-
-
-
-
 
