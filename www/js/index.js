@@ -117,10 +117,3 @@ window.onload =
 		create_enemies();
 		update();
 	};
-
-window.onkeypress = 
-	function(e)
-	{
-		if (e.which == 97)
-			alert('asdf');
-	};
