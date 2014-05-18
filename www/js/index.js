@@ -106,6 +106,7 @@ function update_bomb(e)
 
 var enemies = [];
 var trees = [];
+var particles = [];
 
 function update()
 {
@@ -123,6 +124,15 @@ function update()
 		if (update_tree(trees[i]))
 		{
 			trees.splice(i, 1);
+			--i;
+		}
+	}
+	
+	for (var i = 0; i < particles.length; ++i)
+	{
+		if (update_particle(particles[i]))
+		{
+			particles.splice(i, 1);
 			--i;
 		}
 	}
@@ -150,8 +160,51 @@ function create_enemies()
 function create_trees()
 {
 	trees[trees.length] = new Tree();
-	setTimeout(create_trees, Math.random() * 3000 + 2500);
+	setTimeout(create_trees, Math.random() * 5000 + 5500);
 }
+
+function update_particle(e)
+{
+	if (e.ttl++ == 100)
+	{
+		document.getElementsByTagName("body")[0].removeChild(e.o);
+		return true;
+	}
+	
+	e.x += e.vx;
+	e.y += e.vy;
+	
+	e.vy += e.ay;
+	
+	e.o.style.left = e.x + "px";
+	e.o.style.top = e.y + "px";
+	
+	return false;
+}
+
+
+function Particle(x, y)
+{
+	this.x = x + Math.random() * 50;
+	this.y = y + Math.random() * 50;
+	this.vx = Math.random() * 10 - 5;
+	this.vy = -2 + Math.random() * 10 - 5;
+	this.ay = .4;
+	this.ttl = 0;
+	
+	this.o = document.createElement("div");
+	this.o.style.left = this.x + "px";
+	this.o.style.top = this.y + "px";
+	this.o.style.position = "absolute";
+	this.o.style.width = "5px";
+	this.o.style.height = "5px";
+	this.o.style.borderRadius="2px";
+	
+	this.o.style.backgroundColor = "rgb("+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+","+Math.floor(Math.random() * 255)+")";
+	
+	document.getElementsByTagName("body")[0].appendChild(this.o);
+}
+
 
 window.onkeypress =
 function(e)
@@ -168,6 +221,14 @@ window.onload =
 		create_enemies();
 		create_trees();
 		update();
+	};
+	
+window.onmousedown = 
+	function(e)
+	{
+		for(var i = 0; i < 100; ++i)
+			particles[particles.length] = new Particle(e.x, e.y);
+			
 	};
 
 	
