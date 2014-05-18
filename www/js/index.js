@@ -43,9 +43,16 @@ function animate()
 window.onload = 
 	function()
 	{
-		setTimeout(animate, 10);
 		document.getElementById("div1").onclick = function(){alert("div");};
 	};
+	
+window.onkeypress = 
+	function()
+	{
+		div.setAttribute("position",position++);
+	}
+
+
 
 
 
