@@ -1,9 +1,20 @@
 
+var score = 0;
 
 function update_enemy(e)
 {
-	--e.x;
+	e.x -= 2;
 	e.o.style.left = e.x + "px";
+	e.wheels.style.left = (e.x - 10) + "px";
+	e.gun.style.left = (e.x - 7) + "px";
+	
+	if (e.x < -30)
+	{
+		document.getElementsByTagName("body")[0].removeChild(e.o);
+		--score;
+		return true;
+	}
+	return false;
 }
 
 function Enemy()
@@ -15,7 +26,17 @@ function Enemy()
 	this.o.className = "enemy";
 	this.o.style.left = this.x + "px";
 	
+	this.wheels = document.createElement("div");
+	this.wheels.className = "enemy-wheels";
+	this.wheels.style.left = (this.x - 10) + "px";
+	
+	this.gun = document.createElement("div");
+	this.gun.className = "enemy-gun";
+	this.gun.style.left = (this.x - 7) + "px";
+	
 	body.appendChild(this.o);
+	body.appendChild(this.wheels);
+	body.appendChild(this.gun);
 }
 
 var bombs = [];
@@ -54,7 +75,11 @@ function update()
 {
 	for (var i = 0; i < enemies.length; ++i)
 	{
-		update_enemy(enemies[i]);
+		if (update_enemy(enemies[i]))
+		{
+			enemies.splice(i, 1);
+			--i;
+		}
 	}
 	
 	for(var i = 0; i< bombs.length; ++i)
@@ -65,6 +90,8 @@ function update()
 			--i;
 		}
 	}
+
+	document.getElementById("score").innerHTML = "Score " + score;
 	
 	setTimeout(update, 50);
 }
@@ -91,3 +118,9 @@ window.onload =
 		update();
 	};
 
+window.onkeypress = 
+	function(e)
+	{
+		if (e.which == 97)
+			alert('asdf');
+	};
