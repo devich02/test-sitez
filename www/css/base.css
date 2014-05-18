@@ -30,6 +30,16 @@ position:absolute;
 	background-color:black;
 }
 
+.bomb
+{
+	position:absolute;
+	width: 5px;
+	height: 5px;
+	top: 45px;
+	left: 35%;
+	background-color:black;
+}
+
 .enemy
 {
 	position:fixed;
