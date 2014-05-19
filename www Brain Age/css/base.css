@@ -1,0 +1,45 @@
+.problem
+{
+	font-size:65px;
+	font-family:Verdana;
+	position:absolute;
+	left:40%;
+	top: 30%;
+}
+
+.solution
+{ 
+	font-size:26px;
+	font-family: Verdana;
+	position:absolute;
+	left: 35%;
+	top: 50%;
+}
+
+.response
+{
+	font-size:62px;
+	font-family: Verdana;
+	position:absolute;
+	left: 38%;
+	top: 10%;
+}
+
+.brainage
+{
+	font-size:30px;
+	font-family: Verdana;
+	position:absolute;
+	left: 10%;
+	top: 70%;
+}
+
+
+.score
+{
+	font-size:16px;
+	font-family: Verdana;
+	position:absolute;
+	left:35%;
+	top:60%;
+}

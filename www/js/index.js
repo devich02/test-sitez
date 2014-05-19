@@ -95,11 +95,25 @@ function Bomb()
 
 function update_bomb(e)
 {
+	var bomb_span = window.innerWidth *.35
 	e.y += 5;
 	e.o.style.top= e.y + "px";
 	if (e.y > window.innerHeight - 40)
 	{
 		document.getElementsByTagName("body")[0].removeChild(e.o);
+		for( var i = 0; i< enemies.length; i++)
+		{
+			if(enemies[i].x > bomb_span -10 && enemies[i].x < bomb_span +50)
+			{
+				score++;
+				document.getElementsByTagName("body")[0].removeChild(enemies[i].o);
+				document.getElementsByTagName("body")[0].removeChild(enemies[i].wheels);
+				document.getElementsByTagName("body")[0].removeChild(enemies[i].gun);
+				
+				enemies.splice(i, 1);
+				--i;
+			}
+		}
 		for( var i = 100; i >0; i--)
 		{
 			setTimeout(create_particle, i * 10);
